@@ -54,9 +54,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by allgood on 05/03/16.
- */
+
 public class ImageProcessor extends Handler {
 
     private static final String TAG = "ImageProcessor";
@@ -172,7 +170,7 @@ public class ImageProcessor extends Handler {
 
     public void processPicture(Mat picture) {
 
-        Mat img = Imgcodecs.imdecode(picture, Imgcodecs.CV_LOAD_IMAGE_UNCHANGED);
+        Mat img = Imgcodecs.imdecode(picture, Imgcodecs.CV_LOAD_IMAGE_UNCHANGED); //  3.0
         picture.release();
 
         Log.d(TAG, "processPicture - imported image " + img.size().width + "x" + img.size().height);
@@ -205,6 +203,7 @@ public class ImageProcessor extends Handler {
         Quadrilateral quad = getQuadrilateral(contours, sd.originalSize);
 
         double ratio = sd.originalSize.height / 500;
+        sd.ratio = ratio;
         sd.heightWithRatio = Double.valueOf(sd.originalSize.width / ratio).intValue();
         sd.widthWithRatio = Double.valueOf(sd.originalSize.height / ratio).intValue();
 
@@ -264,8 +263,7 @@ public class ImageProcessor extends Handler {
                 int x = Double.valueOf(quad.points[i].x * ratio).intValue();
                 int y = Double.valueOf(quad.points[i].y * ratio).intValue();
                 if (mBugRotate) {
-                    rescaledPoints[(i + 2) % 4] = new Point(Math.abs(x - mPreviewSize.width),
-                            Math.abs(y - mPreviewSize.height));
+                    rescaledPoints[(i + 2) % 4] = new Point(Math.abs(x - mPreviewSize.width), Math.abs(y - mPreviewSize.height));
                 } else {
                     rescaledPoints[i] = new Point(x, y);
                 }
@@ -307,10 +305,11 @@ public class ImageProcessor extends Handler {
 
         Paint paint = new Paint();
         paint.setColor(mMainActivity.parsedOverlayColor());
+        //paint.setColor(Color.argb(0, 255, 255, 255));
 
         Paint border = new Paint();
-        border.setColor(mMainActivity.parsedOverlayColor());
-        border.setStrokeWidth(5);
+        border.setColor(mMainActivity.parsedOverlayLineColor());
+        border.setStrokeWidth(10);
 
         hud.clear();
         hud.addShape(newBox, paint, border);

@@ -13,9 +13,6 @@ import com.facebook.react.uimanager.annotations.ReactProp;
 
 import javax.annotation.Nullable;
 
-/**
- * Created by Andre on 29/11/2017.
- */
 
 public class DocumentScannerViewManager extends ViewGroupManager<MainView> {
 
@@ -65,6 +62,11 @@ public class DocumentScannerViewManager extends ViewGroupManager<MainView> {
         view.setOverlayColor(rgbaColor);
     }
 
+    @ReactProp(name = "overlayLineColor")
+    public void setOverlayLineColor(MainView view, String rgbaColor) {
+        view.setOverlayLineColor(rgbaColor);
+    }
+
     @ReactProp(name = "detectionCountBeforeCapture", defaultInt = 15)
     public void setDetectionCountBeforeCapture(MainView view, int numberOfRectangles) {
         view.setDetectionCountBeforeCapture(numberOfRectangles);
@@ -73,6 +75,11 @@ public class DocumentScannerViewManager extends ViewGroupManager<MainView> {
     @ReactProp(name = "enableTorch", defaultBoolean = false)
     public void setEnableTorch(MainView view, Boolean enable) {
         view.setEnableTorch(enable);
+    }
+
+    @ReactProp(name = "autoCapture", defaultBoolean = true)
+    public void setAutoCapture(MainView view, boolean autocapture) {
+        view.setAutoCapture(autocapture);
     }
 
     @ReactProp(name = "manualOnly", defaultBoolean = false)
@@ -93,6 +100,11 @@ public class DocumentScannerViewManager extends ViewGroupManager<MainView> {
     @ReactProp(name = "noGrayScale", defaultBoolean = false)
     public void setRemoveGrayScale(MainView view, boolean bw) {
         view.setRemoveGrayScale(bw);
+    }
+
+    @ReactProp(name = "shutterSound", defaultBoolean = true)
+    public void setShutterSound(MainView view, boolean shutterSound) {
+        view.setShutterSound(shutterSound);
     }
 
 }

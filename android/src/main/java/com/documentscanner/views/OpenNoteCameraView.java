@@ -57,6 +57,7 @@ import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.JavaCameraView;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
+import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -115,8 +116,11 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
 
     private boolean documentAnimation = false;
     private int numberOfRectangles = 15;
+    private Boolean shutterSound = true;
+    private Boolean autoCapture = false;
     private Boolean enableTorch = false;
     public String overlayColor = null;
+    public String overlayLineColor = null;
     private View blinkView = null;
     private View mView = null;
     private boolean manualCapture = false;
@@ -172,11 +176,23 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
     }
 
     public void setDocumentAnimation(boolean animate) {
-        this.documentAnimation = animate;
+      this.documentAnimation = animate;
     }
 
-    public void setOverlayColor(String rgbaColor) {
+    public void setAutoCapture(boolean autocapture) {
+        this.autoCapture = autocapture;
+      }
+  
+      public void setShutterSound(boolean shutterSound) {
+        this.shutterSound = shutterSound;
+      }
+  
+        public void setOverlayColor(String rgbaColor) {
         this.overlayColor = rgbaColor;
+    }
+
+    public void setOverlayLineColor(String rgbaColor) {
+        this.overlayLineColor = rgbaColor;
     }
 
     public void setDetectionCountBeforeCapture(int numberOfRectangles) {
@@ -541,29 +557,29 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
     }
 
     public void blinkScreenAndShutterSound() {
-        /*
         AudioManager audio = (AudioManager) mActivity.getSystemService(Context.AUDIO_SERVICE);
         switch (audio.getRingerMode()) {
         case AudioManager.RINGER_MODE_NORMAL:
-            MediaActionSound sound = new MediaActionSound();
-            sound.play(MediaActionSound.SHUTTER_CLICK);
+            if (this.shutterSound) {
+                MediaActionSound sound = new MediaActionSound();
+                sound.play(MediaActionSound.SHUTTER_CLICK);
+            }
             break;
         case AudioManager.RINGER_MODE_SILENT:
             break;
         case AudioManager.RINGER_MODE_VIBRATE:
             break;
         }
-        */
     }
 
     public void waitSpinnerVisible() {
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mWaitSpinner.setVisibility(View.VISIBLE);
-                WritableMap data = new WritableNativeMap();
-                data.putBoolean("processing", true);
-                mThis.processingListener.onProcessingChange(data);
+                //mWaitSpinner.setVisibility(View.VISIBLE);
+                //WritableMap data = new WritableNativeMap();
+                //data.putBoolean("processing", true);
+                //mThis.processingListener.onProcessingChange(data);
             }
         });
     }
@@ -572,11 +588,11 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                // blinkView.setVisibility(View.INVISIBLE);
-                mWaitSpinner.setVisibility(View.INVISIBLE);
-                WritableMap data = new WritableNativeMap();
-                data.putBoolean("processing", false);
-                mThis.processingListener.onProcessingChange(data);
+                //    blinkView.setVisibility(View.INVISIBLE);  //  모름
+                //mWaitSpinner.setVisibility(View.INVISIBLE);
+                //WritableMap data = new WritableNativeMap();
+                //data.putBoolean("processing", false);
+                //mThis.processingListener.onProcessingChange(data);
             }
         });
     }
@@ -599,9 +615,7 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
         this.waitSpinnerVisible();
 
         if (safeToTakePicture) {
-
             safeToTakePicture = false;
-
             try {
                 mCamera.takePicture(null, null, pCallback);
             } catch (Exception e) {
@@ -614,19 +628,17 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
 
     public boolean requestPicture() {
         PackageManager pm = mActivity.getPackageManager();
-        if (safeToTakePicture) {
-
+        if (this.autoCapture && safeToTakePicture) {
             safeToTakePicture = false;
-
             try {
                 if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_AUTOFOCUS)) {
                     mCamera.autoFocus(new Camera.AutoFocusCallback() {
                         @Override
                         public void onAutoFocus(boolean success, Camera camera) {
                             if (success) {
-                                mCamera.takePicture(null, null, pCallback);
-                                blinkScreen();
-                                blinkScreenAndShutterSound();
+                              mCamera.takePicture(null, null, pCallback);
+                              blinkScreen();
+                              blinkScreenAndShutterSound();
                             }
                             if (attemptToFocus) {
                                 return;
@@ -636,9 +648,9 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
                         }
                     });
                 } else {
-                    mCamera.takePicture(null, null, pCallback);
-                    blinkScreen();
-                    blinkScreenAndShutterSound();
+                  mCamera.takePicture(null, null, pCallback);
+                  blinkScreen();
+                  blinkScreenAndShutterSound();
                 }
             } catch (Exception e) {
                 waitSpinnerInvisible();
@@ -650,6 +662,8 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
         return false;
     }
 
+    
+
     public String saveToDirectory(Mat doc) {
         String fileName;
         boolean isIntent = false;
@@ -660,11 +674,9 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
             folder.mkdirs();
             Log.d(TAG, "wrote: created folder " + folder.getPath());
         }
-        fileName = Environment.getExternalStorageDirectory().toString() + "/" + folderName + "/" + UUID.randomUUID()
-                + ".jpg";
+        fileName = Environment.getExternalStorageDirectory().toString() + "/" + folderName + "/" + UUID.randomUUID() + ".jpg";
 
-        Mat endDoc = new Mat(Double.valueOf(doc.size().width).intValue(), Double.valueOf(doc.size().height).intValue(),
-                CvType.CV_8UC4);
+        Mat endDoc = new Mat(Double.valueOf(doc.size().width).intValue(), Double.valueOf(doc.size().height).intValue(), CvType.CV_8UC4);
 
         Core.flip(doc.t(), endDoc, 1);
 
@@ -679,25 +691,44 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
 
         Mat doc = (scannedDocument.processed != null) ? scannedDocument.processed : scannedDocument.original;
 
-        Intent intent = mActivity.getIntent();
-        boolean isIntent = false;
-        Uri fileUri = null;
+        //Intent intent = mActivity.getIntent();
+        //boolean isIntent = false;
+        //Uri fileUri = null;
 
-        String fileName = this.saveToDirectory(doc);
+        //String fileName = this.saveToDirectory(doc);
         String initialFileName = this.saveToDirectory(scannedDocument.original);
+
+        /*
+        Mat orgDoc = scannedDocument.original;
+        Mat endDoc = new Mat(Double.valueOf(orgDoc.size().width).intValue(), Double.valueOf(orgDoc.size().height).intValue(), CvType.CV_8UC4);
+        Core.flip(orgDoc.t(), endDoc, 1);
+        Imgproc.cvtColor(endDoc, endDoc, Imgproc.COLOR_BGR2RGB, 0);
+
+        Bitmap bitmap = Bitmap.createBitmap(endDoc.cols(), endDoc.rows(), Bitmap.Config.ARGB_8888);
+        Utils.matToBitmap(endDoc, bitmap);
+    
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
+        */
+
+        Mat src = Imgcodecs.imread(initialFileName, Imgproc.COLOR_BGR2RGB);
+    
 
         WritableMap data = new WritableNativeMap();
 
         if (this.listener != null) {
-            data.putInt("height", scannedDocument.heightWithRatio);
-            data.putInt("width", scannedDocument.widthWithRatio);
-            data.putString("croppedImage", "file://" + fileName);
+            data.putInt("height", Double.valueOf(src.size().height).intValue());
+            data.putInt("width", Double.valueOf(src.size().width).intValue());
+            //data.putString("croppedImage", "file://" + fileName);
             data.putString("initialImage", "file://" + initialFileName);
             data.putMap("rectangleCoordinates", scannedDocument.previewPointsAsHash());
+            //data.putString("image", "data:image/jpg;base64," + Base64.encodeToString(byteArray, Base64.DEFAULT));
 
             this.listener.onPictureTaken(data);
         }
 
+        /*
         if (isIntent) {
             InputStream inputStream = null;
             OutputStream realOutputStream = null;
@@ -737,6 +768,7 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
             animateDocument(fileName, scannedDocument);
             addImageToGallery(fileName, mContext);
         }
+        */
 
         // Record goal "PictureTaken"
         // ((OpenNoteScannerApplication) getApplication()).getTracker().trackGoal(1);
@@ -749,8 +781,7 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
 
         // if(!documentAnimation) return;
 
-        OpenNoteCameraView.AnimationRunnable runnable = new OpenNoteCameraView.AnimationRunnable(filename,
-                quadrilateral);
+        OpenNoteCameraView.AnimationRunnable runnable = new OpenNoteCameraView.AnimationRunnable(filename, quadrilateral);
         mActivity.runOnUiThread(runnable);
         this.waitSpinnerInvisible();
 
@@ -987,17 +1018,29 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
     }
 
     public int parsedOverlayColor() {
-        {
-            Pattern c = Pattern.compile("rgba *\\( *([0-9]+), *([0-9]+), *([0-9]+), *([0-9]\\.?[0-9]?)*\\)");
-            Matcher m = c.matcher(this.overlayColor);
+          Pattern c = Pattern.compile("rgba *\\( *([0-9]+), *([0-9]+), *([0-9]+), *([0-9]\\.?[0-9]?)*\\)");
+          Matcher m = c.matcher(this.overlayColor);
 
-            if (m.matches()) {
-                return Color.argb((int) (255 * Float.valueOf(m.group(4))), Integer.valueOf(m.group(1)),
-                        Integer.valueOf(m.group(2)), Integer.valueOf(m.group(3)));
-            }
+          if (m.matches()) {
+              return Color.argb((int) (255 * Float.valueOf(m.group(4))), Integer.valueOf(m.group(1)),
+                      Integer.valueOf(m.group(2)), Integer.valueOf(m.group(3)));
+          }
 
-            return Color.argb(180, 66, 165, 245);
+          return Color.argb(180, 66, 165, 245);
 
+      }
+
+    public int parsedOverlayLineColor() {
+        Pattern c = Pattern.compile("rgba *\\( *([0-9]+), *([0-9]+), *([0-9]+), *([0-9]\\.?[0-9]?)*\\)");
+        Matcher m = c.matcher(this.overlayLineColor);
+
+        if (m.matches()) {
+            return Color.argb((int) (255 * Float.valueOf(m.group(4))), Integer.valueOf(m.group(1)),
+                    Integer.valueOf(m.group(2)), Integer.valueOf(m.group(3)));
         }
+
+        return Color.argb(180, 66, 165, 245);
+
     }
+
 }

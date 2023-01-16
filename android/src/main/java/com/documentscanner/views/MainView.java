@@ -7,9 +7,6 @@ import android.widget.FrameLayout;
 
 import com.documentscanner.R;
 
-/**
- * Created by andre on 09/01/2018.
- */
 
 public class MainView extends FrameLayout {
     private OpenNoteCameraView view = null;
@@ -76,6 +73,10 @@ public class MainView extends FrameLayout {
         view.setOverlayColor(rgbaColor);
     }
 
+    public void setOverlayLineColor(String rgbaColor) {
+        view.setOverlayLineColor(rgbaColor);
+    }
+
     public void setBrightness(double brightness) {
         view.setBrightness(brightness);
     }
@@ -84,12 +85,20 @@ public class MainView extends FrameLayout {
         view.setContrast(contrast);
     }
 
+    public void setAutoCapture(boolean autocapture) {
+        view.setAutoCapture(autocapture);
+    }
+
     public void setManualOnly(boolean manualOnly) {
         view.setManualOnly(manualOnly);
     }
 
     public void setRemoveGrayScale(boolean grayscale) {
         view.setRemoveGrayScale(grayscale);
+    }
+
+    public void setShutterSound(boolean shutterSound) {
+        view.setShutterSound(shutterSound);
     }
 
     public void capture() {
