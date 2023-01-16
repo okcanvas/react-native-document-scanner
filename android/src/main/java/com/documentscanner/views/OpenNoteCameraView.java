@@ -541,6 +541,7 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
     }
 
     public void blinkScreenAndShutterSound() {
+        /*
         AudioManager audio = (AudioManager) mActivity.getSystemService(Context.AUDIO_SERVICE);
         switch (audio.getRingerMode()) {
         case AudioManager.RINGER_MODE_NORMAL:
@@ -552,6 +553,7 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
         case AudioManager.RINGER_MODE_VIBRATE:
             break;
         }
+        */
     }
 
     public void waitSpinnerVisible() {
