@@ -7,9 +7,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Size;
 
-/**
- * Created by allgood on 05/03/16.
- */
+
 public class ScannedDocument {
 
     public Mat original;
@@ -21,6 +19,7 @@ public class ScannedDocument {
 
     public Point[] originalPoints;
 
+    public double ratio = 1;
     public int heightWithRatio;
     public int widthWithRatio;
 
@@ -40,24 +39,22 @@ public class ScannedDocument {
     public WritableMap previewPointsAsHash() {
         if (this.previewPoints == null) return null;
         WritableMap rectangleCoordinates = new WritableNativeMap();
-
+        
         WritableMap topLeft = new WritableNativeMap();
-        topLeft.putDouble("x", this.originalPoints[0].x);
-        topLeft.putDouble("y", this.originalPoints[0].y);
+        topLeft.putInt("x", Double.valueOf(this.originalPoints[0].x * this.ratio).intValue());
+        topLeft.putInt("y", Double.valueOf(this.originalPoints[0].y * this.ratio).intValue());
 
         WritableMap topRight = new WritableNativeMap();
-        topRight.putDouble("x", this.originalPoints[1].x);
-        topRight.putDouble("y", this.originalPoints[1].y);
+        topRight.putInt("x", Double.valueOf(this.originalPoints[1].x * this.ratio).intValue());
+        topRight.putInt("y", Double.valueOf(this.originalPoints[1].y * this.ratio).intValue());
 
         WritableMap bottomRight = new WritableNativeMap();
-        bottomRight.putDouble("x", this.originalPoints[2].x);
-        bottomRight.putDouble("y", this.originalPoints[2].y);
+        bottomRight.putInt("x", Double.valueOf(this.originalPoints[2].x * this.ratio).intValue());
+        bottomRight.putInt("y", Double.valueOf(this.originalPoints[2].y * this.ratio).intValue());
 
         WritableMap bottomLeft = new WritableNativeMap();
-        bottomLeft.putDouble("x", this.originalPoints[3].x);
-        bottomLeft.putDouble("y", this.originalPoints[3].y);
-
-
+        bottomLeft.putInt("x", Double.valueOf(this.originalPoints[3].x * this.ratio).intValue());
+        bottomLeft.putInt("y", Double.valueOf(this.originalPoints[3].y * this.ratio).intValue());
 
         rectangleCoordinates.putMap("topLeft", topLeft);
         rectangleCoordinates.putMap("topRight", topRight);
