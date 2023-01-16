@@ -17,6 +17,7 @@
   ],
   "author": "okcanvas",
   "license": "MIT",
+  "homepage": "https://github.com/okcanvas/react-native-document-scanner#readme",
   "dependencies": {
     "react": "18.0.0",
     "react-native": "0.69.6"
