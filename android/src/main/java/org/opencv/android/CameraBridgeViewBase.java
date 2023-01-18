@@ -2,7 +2,7 @@ package org.opencv.android;
 
 import java.util.List;
 
-import com.documentscanner.R;
+import com.okcanvas.documentscanner.R;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
 

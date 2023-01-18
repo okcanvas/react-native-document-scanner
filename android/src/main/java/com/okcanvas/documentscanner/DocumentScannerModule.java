@@ -1,6 +1,6 @@
-package com.documentscanner;
+package com.okcanvas.documentscanner;
 
-import com.documentscanner.views.MainView;
+import com.okcanvas.documentscanner.views.MainView;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;

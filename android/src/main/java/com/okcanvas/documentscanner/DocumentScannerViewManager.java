@@ -1,9 +1,9 @@
-package com.documentscanner;
+package com.okcanvas.documentscanner;
 
 import android.app.Activity;
 
-import com.documentscanner.views.MainView;
-import com.documentscanner.views.OpenNoteCameraView;
+import com.okcanvas.documentscanner.views.MainView;
+import com.okcanvas.documentscanner.views.OpenNoteCameraView;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;

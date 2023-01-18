@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.platform      = :ios, "10.0"
   s.source        = { :git => "https://github.com/okcanvas/react-native-document-scanner.git", :tag => "#{s.version}" }
 
-  s.source_files  = "ios/**/*.{h,m}"
+  s.source_files  = "ios/**/*.{h,m,mm}"
   s.requires_arc  = true
 
   s.dependency 'React'

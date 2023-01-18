@@ -1,4 +1,4 @@
-package com.documentscanner;
+package com.okcanvas.documentscanner;
 
 import android.app.Activity;
 

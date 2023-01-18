@@ -1,11 +1,11 @@
-package com.documentscanner.views;
+package com.okcanvas.documentscanner.views;
 
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 
-import com.documentscanner.R;
+import com.okcanvas.documentscanner.R;
 
 
 public class MainView extends FrameLayout {

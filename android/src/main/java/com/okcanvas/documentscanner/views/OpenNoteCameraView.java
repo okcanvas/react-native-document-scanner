@@ -1,4 +1,4 @@
-package com.documentscanner.views;
+package com.okcanvas.documentscanner.views;
 
 import android.app.Activity;
 import android.content.Context;
@@ -42,13 +42,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.documentscanner.BuildConfig;
-import com.documentscanner.ImageProcessor;
-import com.documentscanner.R;
-import com.documentscanner.helpers.CustomOpenCVLoader;
-import com.documentscanner.helpers.OpenNoteMessage;
-import com.documentscanner.helpers.PreviewFrame;
-import com.documentscanner.helpers.ScannedDocument;
+import com.okcanvas.documentscanner.BuildConfig;
+import com.okcanvas.documentscanner.ImageProcessor;
+import com.okcanvas.documentscanner.R;
+import com.okcanvas.documentscanner.helpers.CustomOpenCVLoader;
+import com.okcanvas.documentscanner.helpers.OpenNoteMessage;
+import com.okcanvas.documentscanner.helpers.PreviewFrame;
+import com.okcanvas.documentscanner.helpers.ScannedDocument;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableNativeMap;
@@ -88,8 +88,8 @@ import java.util.regex.Pattern;
 
 import android.util.Base64;
 
-import static com.documentscanner.helpers.Utils.addImageToGallery;
-import static com.documentscanner.helpers.Utils.decodeSampledBitmapFromUri;
+import static com.okcanvas.documentscanner.helpers.Utils.addImageToGallery;
+import static com.okcanvas.documentscanner.helpers.Utils.decodeSampledBitmapFromUri;
 
 public class OpenNoteCameraView extends JavaCameraView implements PictureCallback {
 

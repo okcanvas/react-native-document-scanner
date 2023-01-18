@@ -1,4 +1,4 @@
-package com.documentscanner.views;
+package com.okcanvas.documentscanner.views;
 
 import android.content.Context;
 import android.graphics.Canvas;

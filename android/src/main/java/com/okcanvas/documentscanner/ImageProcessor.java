@@ -1,4 +1,4 @@
-package com.documentscanner;
+package com.okcanvas.documentscanner;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,7 +14,7 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.documentscanner.views.OpenNoteCameraView;
+import com.okcanvas.documentscanner.views.OpenNoteCameraView;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.ChecksumException;
 import com.google.zxing.FormatException;
@@ -25,12 +25,12 @@ import com.google.zxing.Result;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.multi.qrcode.QRCodeMultiReader;
-import com.documentscanner.helpers.OpenNoteMessage;
-import com.documentscanner.helpers.PreviewFrame;
-import com.documentscanner.helpers.Quadrilateral;
-import com.documentscanner.helpers.ScannedDocument;
-import com.documentscanner.helpers.Utils;
-import com.documentscanner.views.HUDCanvasView;
+import com.okcanvas.documentscanner.helpers.OpenNoteMessage;
+import com.okcanvas.documentscanner.helpers.PreviewFrame;
+import com.okcanvas.documentscanner.helpers.Quadrilateral;
+import com.okcanvas.documentscanner.helpers.ScannedDocument;
+import com.okcanvas.documentscanner.helpers.Utils;
+import com.okcanvas.documentscanner.views.HUDCanvasView;
 
 import org.opencv.core.Core;
 import org.opencv.core.CvType;

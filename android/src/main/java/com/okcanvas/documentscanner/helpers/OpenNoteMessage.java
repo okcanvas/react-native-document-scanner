@@ -1,4 +1,4 @@
-package com.documentscanner.helpers;
+package com.okcanvas.documentscanner.helpers;
 
 /**
  * Created by allgood on 05/03/16.

@@ -1,4 +1,4 @@
-package com.documentscanner.helpers;
+package com.okcanvas.documentscanner.helpers;
 
 import android.content.ContentValues;
 import android.content.Context;

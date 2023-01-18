@@ -1,4 +1,4 @@
-package com.documentscanner.helpers;
+package com.okcanvas.documentscanner.helpers;
 
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableNativeMap;

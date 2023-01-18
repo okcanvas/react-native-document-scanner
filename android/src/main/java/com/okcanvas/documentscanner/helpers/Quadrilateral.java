@@ -1,4 +1,4 @@
-package com.documentscanner.helpers;
+package com.okcanvas.documentscanner.helpers;
 
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;

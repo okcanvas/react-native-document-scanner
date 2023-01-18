@@ -1,6 +1,6 @@
 package org.opencv.android;
 
-import com.documentscanner.R;
+import com.okcanvas.documentscanner.R;
 
 import android.content.Context;
 import android.content.res.TypedArray;
